@@ -1,34 +1,52 @@
 import React from "react";
-import { getProduct, deleteProduct, createProduct } from "./lib/api.js";
-import logo from "./logo.svg";
-import "./App.css";
-import { create } from "axios/lib/axios";
+import {
+  getProducts,
+  getProduct,
+  deleteProduct,
+  createProduct,
+} from "./lib/api.js";
+import Form from "./components/Form";
+import ListItem from "./components/ListItem";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/App.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      newProductName: "",
+      newProductAvatar: "",
+      show_products: false,
+      products: [],
+    };
   }
 
-  componentDidMount() {}
+  async loadProducts() {
+    const data = await getProducts();
+    this.setState({ show_products: true, products: data });
+  }
+
+  componentDidMount() {
+    this.loadProducts();
+  }
+
   render() {
+    let { show_products, products } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <>
+        <h1> Company Products</h1>
+        <Form></Form>
+        <ul className="list-group list-group-flush product-list">
+          {show_products &&
+            products.map((product) => (
+              <ListItem
+                key={product.id}
+                name={product.name}
+                avatar={product.avatar}
+              ></ListItem>
+            ))}
+        </ul>
+      </>
     );
   }
 }
