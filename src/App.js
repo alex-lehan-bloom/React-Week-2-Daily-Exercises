@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  getProducts,
-  getProduct,
-  deleteProduct,
-  createProduct,
-} from "./lib/api.js";
+import { getProducts, deleteProduct, createProduct } from "./lib/api.js";
 import Form from "./components/Form";
 import ListItem from "./components/ListItem";
+import AlertComponent from "./components/AlertComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/App.css";
 
@@ -16,6 +12,7 @@ class App extends React.Component {
     this.state = {
       show_products: false,
       products: [],
+      nameLengthExceeded: false,
     };
   }
 
@@ -30,8 +27,13 @@ class App extends React.Component {
   };
 
   onSubmit = async (state) => {
-    await createProduct(state.name, state.avatar);
-    this.loadProducts();
+    if (state.name.length < 5) {
+      this.setState({ nameLengthExceeded: false });
+      await createProduct(state.name, state.avatar);
+      this.loadProducts();
+    } else {
+      this.setState({ nameLengthExceeded: true });
+    }
   };
 
   componentDidMount() {
@@ -39,11 +41,14 @@ class App extends React.Component {
   }
 
   render() {
-    let { show_products, products } = this.state;
+    let { show_products, products, nameLengthExceeded } = this.state;
     return (
       <>
         <h1> Company Products</h1>
         <Form onFormSubmit={this.onSubmit}></Form>
+        {nameLengthExceeded && (
+          <AlertComponent message="The product name can't be longer than 5 characters."></AlertComponent>
+        )}
         <ul className="list-group list-group-flush product-list">
           {show_products &&
             products.map((product) => (
