@@ -14,8 +14,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newProductName: "",
-      newProductAvatar: "",
       show_products: false,
       products: [],
     };
@@ -26,6 +24,16 @@ class App extends React.Component {
     this.setState({ show_products: true, products: data });
   }
 
+  onDelete = async (state) => {
+    await deleteProduct(state.id);
+    this.loadProducts();
+  };
+
+  onSubmit = async (state) => {
+    await createProduct(state.name, state.avatar);
+    this.loadProducts();
+  };
+
   componentDidMount() {
     this.loadProducts();
   }
@@ -35,12 +43,14 @@ class App extends React.Component {
     return (
       <>
         <h1> Company Products</h1>
-        <Form></Form>
+        <Form onFormSubmit={this.onSubmit}></Form>
         <ul className="list-group list-group-flush product-list">
           {show_products &&
             products.map((product) => (
               <ListItem
+                onProductDelete={this.onDelete}
                 key={product.id}
+                id={product.id}
                 name={product.name}
                 avatar={product.avatar}
               ></ListItem>

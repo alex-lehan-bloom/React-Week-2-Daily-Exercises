@@ -17,8 +17,7 @@ class Form extends React.Component {
   }
   async onSubmit(event) {
     event.preventDefault();
-    let { name, avatar } = this.state;
-    createProduct(name, avatar);
+    this.props.onFormSubmit(this.state);
   }
 
   render() {

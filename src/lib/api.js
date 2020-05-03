@@ -5,6 +5,8 @@ export async function getProducts() {
     `https://5dd14f8d15bbc2001448d07d.mockapi.io/products/`
   );
   const data = response.data;
+  console.log(data);
+
   return data;
 }
 
@@ -17,7 +19,7 @@ export async function getProduct(product_id) {
 }
 
 export async function deleteProduct(product_id) {
-  const response = await axios.post(
+  const response = await axios.delete(
     `https://5dd14f8d15bbc2001448d07d.mockapi.io/products/${product_id}`
   );
   const data = response.data;
