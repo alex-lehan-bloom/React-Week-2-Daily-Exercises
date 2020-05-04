@@ -43,6 +43,9 @@ class App extends React.Component {
   render() {
     let { show_products, products, nameLengthExceeded } = this.state;
     return (
+      <FORM></FORM>
+      <LIST></LIST>
+
       <>
         <h1> Company Products</h1>
         <Form onFormSubmit={this.onSubmit}></Form>
@@ -61,7 +64,7 @@ class App extends React.Component {
               ></ListItem>
             ))}
         </ul>
-      </>
+      </FORM>
     );
   }
 }
