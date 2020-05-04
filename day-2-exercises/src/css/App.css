@@ -32,3 +32,6 @@
 .page-links {
   margin: 10px;
 }
+.form-control {
+  width: 75%;
+}

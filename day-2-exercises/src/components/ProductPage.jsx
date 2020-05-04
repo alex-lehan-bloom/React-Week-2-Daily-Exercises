@@ -18,7 +18,6 @@ class ProductPage extends React.Component {
 
   getProduct() {
     const { match, products } = this.props;
-    console.log(match.params.productid);
     products.map((product) => {
       {
         console.log(product.id);
@@ -37,7 +36,6 @@ class ProductPage extends React.Component {
     const { product } = this.state;
     const { match } = this.props;
     const urlPrice = match.params.productid + "/price";
-    console.log(urlPrice);
     return (
       <>
         {product && (
@@ -49,7 +47,7 @@ class ProductPage extends React.Component {
               <button className="btn btn-success">Price</button>
             </Link>
             <Switch>
-              <Route path={`/product/:productid/price`}>
+              <Route exact path={`/product/:productid/price`}>
                 <p>{product.price}</p>
               </Route>
             </Switch>

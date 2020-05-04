@@ -3,6 +3,7 @@ import HomePage from "./components/HomePage";
 import CompanyProducts from "./components/CompanyProducts";
 import ProductPage from "./components/ProductPage";
 import List from "./components/List";
+import Search from "./components/Search";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/App.css";
@@ -46,11 +47,17 @@ class App extends React.Component {
           price: "$150",
         },
       ],
+      searchQuery: "",
     };
   }
 
+  onCompanySearch(searchQuery) {
+    console.log(searchQuery);
+    this.setState({ searchQuery: searchQuery });
+  }
+
   render() {
-    let { company_logo, company_products } = this.state;
+    let { company_logo, company_products, searchQuery } = this.state;
     return (
       <div className="App">
         <Router>
@@ -68,7 +75,12 @@ class App extends React.Component {
             </Route>
             <Route path="/products">
               <CompanyProducts>
-                <List list={company_products}></List>
+                <Search
+                  onUserType={(searchQuery) => {
+                    this.onCompanySearch(searchQuery);
+                  }}
+                ></Search>
+                <List list={company_products} searchQuery={searchQuery}></List>
               </CompanyProducts>
             </Route>
             <Route path="/">
