@@ -52,7 +52,6 @@ class App extends React.Component {
   }
 
   onCompanySearch(searchQuery) {
-    console.log(searchQuery);
     this.setState({ searchQuery: searchQuery });
   }
 

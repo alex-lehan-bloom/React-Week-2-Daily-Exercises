@@ -7,11 +7,13 @@ class Search extends React.Component {
   }
 
   handleUserTyping(event) {
-    this.setState({ input: event.target.value });
-    this.props.onUserType(this.state);
+    this.setState({ input: event.target.value }, () => {
+      this.props.onUserType(this.state);
+    });
   }
 
   render() {
+    console.log(this.state.input);
     return (
       <input
         type="email"

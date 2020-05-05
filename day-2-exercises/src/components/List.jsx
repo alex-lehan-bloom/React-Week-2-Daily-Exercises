@@ -1,15 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function List(props) {
-  let { list, searchQuery } = props;
-  let list_to_display = [];
+class List extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchQuery: "",
+    };
+  }
 
-  list.map((item, index) => {
-    if (item.name === searchQuery) {
-      list_to_display.push(<li key={index}>{item.name}</li>);
-    }
-  });
-  return list_to_display;
+  render() {
+    let { list, searchQuery } = this.props;
+    let list_to_display = [];
+    let regex = new RegExp(searchQuery.input);
+    list.map((item, index) => {
+      if (regex.test(item.name)) {
+        list_to_display.push(
+          <li key={index}>
+            <Link to={`/product/${item.id}`}>{item.name}</Link>
+          </li>
+        );
+      }
+    });
+    return list_to_display;
+  }
 }
 
 export default List;

@@ -35,7 +35,7 @@ class ProductPage extends React.Component {
   render() {
     const { product } = this.state;
     const { match } = this.props;
-    const urlPrice = match.params.productid + "/price";
+    const urlPrice = "/product/" + match.params.productid + "/price";
     return (
       <>
         {product && (
